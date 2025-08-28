@@ -1,3 +1,4 @@
+import 'package:note/model/note_model.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -39,5 +40,36 @@ class DatabaseHelper{
     )
     ''');
   }
+
+  Future<int> insertNote(Note note) async {
+    final db = await database;
+    return await db.insert('note', note.toMap());
+  }
+
+  Future<List<Note>> getNotes()async{
+    final db = await database;
+    final List<Map<String,dynamic>> maps = await db.query('note');
+    return List.generate(maps.length, (i)=>Note.fromMap(maps[i]));
+  }
+
+  Future<int> updateNote(Note note) async{
+    final db = await database;
+    return await db.update(
+      'note',
+      note.toMap(),
+      where: 'id = ?',
+      whereArgs: [note.id],
+    );
+  }
+
+  Future<int> deleteNote(int id) async{
+    final db = await database;
+    return await db.delete(
+      'note',
+      where: 'id = ?',
+      whereArgs: [id],
+    );
+  }
+
 
 }
