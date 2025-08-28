@@ -3,10 +3,13 @@ import 'package:sqflite/sqflite.dart';
 
 class DatabaseHelper{
 
-  static final DatabaseHelper _instance = DatabaseHelper()._internal();
+  static final DatabaseHelper _instance = DatabaseHelper._internal();
 
   static Database? _database;
-  factory DatabaseHelper()=> _instance;
+
+  factory DatabaseHelper() {
+    return _instance;
+  }
 
   DatabaseHelper._internal();
 
@@ -32,7 +35,7 @@ class DatabaseHelper{
       title TEXT,
       content TEXT,
       color TEXT,
-      dateTime TEXT
+      dateTime TEXT,
     )
     ''');
   }
